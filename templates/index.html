@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="banner">
+    <div class="container">
+        <h2>专注电子科技，创新引领未来</h2>
+        <p>广州顺如电子科技有限公司，致力于为您提供最可靠的工业电子解决方案</p>
+        <a href="{{ url_for('products') }}" class="btn">查看产品</a>
+    </div>
+</div>
+
+<section class="section">
+    <div class="container">
+        <h3>我们的优势</h3>
+        <div class="features">
+            <div class="feature-item">
+                <h4>技术研发</h4>
+                <p>拥有10年以上行业经验的研发团队。</p>
+            </div>
+            <div class="feature-item">
+                <h4>品质保证</h4>
+                <p>严格的ISO质量管理体系，产品合格率99.9%。</p>
+            </div>
+            <div class="feature-item">
+                <h4>售后服务</h4>
+                <p>7x24小时技术支持，快速响应客户需求。</p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

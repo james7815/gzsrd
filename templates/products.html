@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="page-header">
+    <div class="container">
+        <h2>产品中心</h2>
+    </div>
+</div>
+<section class="section">
+    <div class="container">
+        <div class="product-grid">
+            {% for item in products %}
+            <div class="product-card">
+                <h4>{{ item.name }}</h4>
+                <p>{{ item.desc }}</p>
+                <a href="#" class="btn-small">了解详情</a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}
