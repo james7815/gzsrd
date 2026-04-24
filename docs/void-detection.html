@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="高铁、城际站台门与列车间超长超宽复杂空间无盲区异常检测系统">
+    <meta name="keywords" content="高铁,城际铁路,站台门,列车,无盲区异常检测,复杂空间,异物检测">
+    <meta name="author" content="广州顺如电子科技有限公司">
+    <link rel="canonical" href="https://gzsrdz.cn/void-detection.html">
+    <title>高铁、城际站台门与列车间超长超宽复杂空间无盲区异常检测 - 广州顺如电子科技有限公司</title>
+    <!-- Tailwind CSS v3 -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <!-- AOS Animation Library -->
+    <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#1a56db',
+                        secondary: '#4f46e5',
+                        dark: '#1e293b',
+                        light: '#f8fafc'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .text-shadow {
+                text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+            }
+            .transition-all-300 {
+                transition: all 300ms ease-in-out;
+            }
+            .bg-gradient-blue {
+                background: linear-gradient(135deg, #1a56db 0%, #4f46e5 100%);
+            }
+        }
+        
+        /* 自定义样式 */
+        .hero-section {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(26, 86, 219, 0.9) 0%, rgba(79, 70, 229, 0.8) 100%);
+            z-index: 1;
+        }
+        
+        .hero-section .container {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .nav-link {
+            position: relative;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: #1a56db;
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .feature-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        .tech-spec {
+            border-left: 4px solid #1a56db;
+        }
+    </style>
+</head>
+<body class="font-sans text-gray-800 bg-light">
+    <!-- 导航栏 -->
+    <header class="fixed w-full bg-white shadow-md z-50">
+        <nav class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <a href="index.html">
+                    <img src="images/logo/logo.png" alt="顺如电子" class="h-12">
+                </a>
+                <span class="text-xl font-bold text-primary hidden md:block">广州顺如电子科技有限公司</span>
+            </div>
+            
+            <!-- 桌面导航 -->
+            <div class="hidden md:flex items-center space-x-8">
+                <a href="index.html" class="nav-link font-medium text-gray-700 hover:text-primary transition-all-300">首页</a>
+                <a href="index.html#about" class="nav-link font-medium text-gray-700 hover:text-primary transition-all-300">关于我们</a>
+                <a href="index.html#services" class="nav-link font-medium text-gray-700 hover:text-primary transition-all-300">主营业务</a>
+                <a href="index.html#contact" class="nav-link font-medium text-gray-700 hover:text-primary transition-all-300">联系我们</a>
+            </div>
+            
+            <!-- 移动端菜单按钮 -->
+            <div class="md:hidden">
+                <button id="menu-toggle" class="text-gray-700 focus:outline-none">
+                    <i class="fa fa-bars text-2xl"></i>
+                </button>
+            </div>
+        </nav>
+        
+        <!-- 移动端导航菜单 -->
+        <div id="mobile-menu" class="md:hidden hidden bg-white shadow-lg absolute w-full">
+            <div class="container mx-auto px-4 py-2 flex flex-col space-y-3">
+                <a href="index.html" class="py-2 px-4 text-gray-700 hover:bg-primary hover:text-white rounded transition-all-300">首页</a>
+                <a href="index.html#about" class="py-2 px-4 text-gray-700 hover:bg-primary hover:text-white rounded transition-all-300">关于我们</a>
+                <a href="index.html#services" class="py-2 px-4 text-gray-700 hover:bg-primary hover:text-white rounded transition-all-300">主营业务</a>
+                <a href="index.html#contact" class="py-2 px-4 text-gray-700 hover:bg-primary hover:text-white rounded transition-all-300">联系我们</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- 英雄区域 -->
+    <section class="hero-section min-h-screen flex items-center pt-16" style="background-image: url('images/banner/void-detection-bg.jpg');">
+        <div class="container mx-auto px-4 py-16">
+            <div class="max-w-4xl" data-aos="fade-right" data-aos-duration="1000">
+                <div class="inline-block bg-white bg-opacity-20 backdrop-blur-sm px-4 py-2 rounded-full text-white mb-6">
+                    <span class="font-semibold">技术创新</span>
+                </div>
+                <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 text-shadow">高铁、城际站台门与列车间超长超宽复杂空间无盲区异常检测</h1>
+                <p class="text-xl md:text-2xl text-white mb-8 opacity-90">针对高铁和城际铁路站台门与列车间的复杂空间，开发创新的无盲区异常检测理论与方法，建立完善的系统设计标准。</p>
+                <div class="flex flex-wrap gap-4">
+                    <a href="#overview" class="bg-white text-primary hover:bg-gray-100 px-6 py-3 rounded-lg font-medium transition-all-300 shadow-lg">技术概述</a>
+                    <a href="#achievements" class="bg-transparent border-2 border-white text-white hover:bg-white hover:text-primary px-6 py-3 rounded-lg font-medium transition-all-300">项目成果</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 技术概述 -->
+    <section id="overview" class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4 text-dark">技术概述</h2>
+                <div class="w-24 h-1 bg-primary mx-auto mb-6"></div>
+                <p class="text-gray-600 max-w-3xl mx-auto">本项目针对高铁和城际铁路站台门与列车间的超长超宽复杂空间，开发了创新的无盲区异常检测系统，解决了传统检测方法的局限性。</p>
+            </div>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div data-aos="fade-right">
+                    <div class="bg-gray-50 rounded-xl p-8 shadow-lg">
+                        <h3 class="text-2xl font-bold mb-6 text-primary">项目背景</h3>
+                        <p class="text-gray-700 mb-6">随着高铁和城际铁路的快速发展，站台门与列车间的安全问题日益突出。由于列车车型多样、站台结构复杂，传统的检测方法难以实现无盲区覆盖，存在严重的安全隐患。</p>
+                        
+                        <h3 class="text-2xl font-bold mb-6 text-primary">技术挑战</h3>
+                        <ul class="space-y-3 text-gray-700">
+                            <li class="flex items-start">
+                                <i class="fa fa-exclamation-circle text-primary mt-1 mr-3"></i>
+                                <span>超长超宽空间：站台门与列车间的间隙空间长且宽，传统单一传感器难以全覆盖。</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fa fa-exclamation-circle text-primary mt-1 mr-3"></i>
+                                <span>强气流干扰：高速列车通过时产生的强气流会干扰检测设备的正常工作。</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fa fa-exclamation-circle text-primary mt-1 mr-3"></i>
+                                <span>检测盲区：站台结构立柱、站台门等会遮挡检测视线，形成盲区。</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fa fa-exclamation-circle text-primary mt-1 mr-3"></i>
+                                <span>多尺度异物：需要检测的异物大小不一，从微小的零部件到较大的物品，检测难度大。</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div data-aos="fade-left">
+                    <img src="images/about/zhantai.png" alt="高铁站台" class="rounded-xl shadow-xl w-full h-auto">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 项目成果 -->
+    <section id="achievements" class="py-20 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4 text-dark">项目成果</h2>
+                <div class="w-24 h-1 bg-primary mx-auto mb-6"></div>
+                <p class="text-gray-600 max-w-3xl mx-auto">基于国家轨道交通公交化需求，开展了以下工作，取得了丰硕的成果。</p>
+            </div>
+            
+            <div class="grid grid-cols-1 gap-8">
+                <div class="bg-white rounded-xl p-8 shadow-lg" data-aos="fade-up">
+                    <div class="space-y-8">
+                        <div class="flex items-start">
+                            <div class="w-12 h-12 bg-primary bg-opacity-10 rounded-full flex items-center justify-center mr-6 shrink-0">
+                                <span class="font-bold text-primary text-xl">1</span>
+                            </div>
+                            <div>
+                                <p class="text-gray-700">通过对城际铁路CRH 各谱系车型的动态包络线分析，结合现有站台门限界规范，开展了满足限界条件的异物监测设备布局研究，首次给出了异物检测设备限界限值和安装要求。</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="w-12 h-12 bg-primary bg-opacity-10 rounded-full flex items-center justify-center mr-6 shrink-0">
+                                <span class="font-bold text-primary text-xl">2</span>
+                            </div>
+                            <div>
+                                <p class="text-gray-700">提出了强气流干扰环境下通长区间的异物检测与定位四目算法，低成本解决了超长超宽站台地面无盲区高精度异物检测和定位问题，实现了单一异物定位到车门。</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="w-12 h-12 bg-primary bg-opacity-10 rounded-full flex items-center justify-center mr-6 shrink-0">
+                                <span class="font-bold text-primary text-xl">3</span>
+                            </div>
+                            <div>
+                                <p class="text-gray-700">针对不同站台的检测区域中结构立柱、站台门等导致检测盲区的遮挡问题，提出了顶装、侧装、地面监测等不同形式的异物检测方案，解决了长期存在的检测盲区问题。采用了红外主动照明、多传感器融合，解决了超长超宽复杂环境高精度多尺度异物检测、风险区域检测和异物种类检测等问题。</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="w-12 h-12 bg-primary bg-opacity-10 rounded-full flex items-center justify-center mr-6 shrink-0">
+                                <span class="font-bold text-primary text-xl">4</span>
+                            </div>
+                            <div>
+                                <p class="text-gray-700">主编了广东省地方标准《轨道交通站台门与列车之间风险空间异物检测系统技术标准》，填补了空白。</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="w-12 h-12 bg-primary bg-opacity-10 rounded-full flex items-center justify-center mr-6 shrink-0">
+                                <span class="font-bold text-primary text-xl">5</span>
+                            </div>
+                            <div>
+                                <p class="text-gray-700">系统在广佛南环、广佛东环、琶州支线、广清南延和吴圩机场高铁站等工程应用。</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 技术优势 -->
+    <section id="advantages" class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4 text-dark">技术优势</h2>
+                <div class="w-24 h-1 bg-primary mx-auto mb-6"></div>
+                <p class="text-gray-600 max-w-3xl mx-auto">本项目开发的无盲区异常检测系统具有多项技术优势，能够有效解决传统检测方法的不足。</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="feature-card bg-white rounded-lg shadow-lg p-8" data-aos="fade-up" data-aos-delay="100">
+                    <div class="w-16 h-16 bg-primary bg-opacity-10 rounded-full flex items-center justify-center mb-6">
+                        <i class="fa fa-check-circle text-2xl text-primary"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4 text-dark">无盲区覆盖</h3>
+                    <p class="text-gray-600">通过创新的传感器布局和多传感器融合技术，实现了站台门与列车间复杂空间的无盲区全覆盖检测。</p>
+                </div>
+                
+                <div class="feature-card bg-white rounded-lg shadow-lg p-8" data-aos="fade-up" data-aos-delay="200">
+                    <div class="w-16 h-16 bg-primary bg-opacity-10 rounded-full flex items-center justify-center mb-6">
+                        <i class="fa fa-bolt text-2xl text-primary"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4 text-dark">强抗干扰能力</h3>
+                    <p class="text-gray-600">采用先进的信号处理算法，有效抵抗高速列车通过时产生的强气流干扰，确保检测的准确性和稳定性。</p>
+                </div>
+                
+                <div class="feature-card bg-white rounded-lg shadow-lg p-8" data-aos="fade-up" data-aos-delay="300">
+                    <div class="w-16 h-16 bg-primary bg-opacity-10 rounded-full flex items-center justify-center mb-6">
+                        <i class="fa fa-crosshairs text-2xl text-primary"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4 text-dark">高精度定位</h3>
+                    <p class="text-gray-600">四目算法能够实现异物的精确定位，将单一异物定位到车门，为后续处理提供准确的位置信息。</p>
+                </div>
+                
+                <div class="feature-card bg-white rounded-lg shadow-lg p-8" data-aos="fade-up" data-aos-delay="400">
+                    <div class="w-16 h-16 bg-primary bg-opacity-10 rounded-full flex items-center justify-center mb-6">
+                        <i class="fa fa-cogs text-2xl text-primary"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4 text-dark">灵活适配</h3>
+                    <p class="text-gray-600">针对不同站台的结构特点，提供顶装、侧装、地面监测等多种安装方案，灵活适配各种应用场景。</p>
+                </div>
+                
+                <div class="feature-card bg-white rounded-lg shadow-lg p-8" data-aos="fade-up" data-aos-delay="500">
+                    <div class="w-16 h-16 bg-primary bg-opacity-10 rounded-full flex items-center justify-center mb-6">
+                        <i class="fa fa-lightbulb-o text-2xl text-primary"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4 text-dark">红外主动照明</h3>
+                    <p class="text-gray-600">采用红外主动照明技术，确保在各种光照条件下都能获得清晰的图像，提高检测的可靠性。</p>
+                </div>
+                
+                <div class="feature-card bg-white rounded-lg shadow-lg p-8" data-aos="fade-up" data-aos-delay="600">
+                    <div class="w-16 h-16 bg-primary bg-opacity-10 rounded-full flex items-center justify-center mb-6">
+                        <i class="fa fa-book text-2xl text-primary"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4 text-dark">标准引领</h3>
+                    <p class="text-gray-600">主编广东省地方标准，为行业提供了技术规范和指导，推动了行业的标准化发展。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 应用案例 -->
+    <section id="cases" class="py-20 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4 text-dark">应用案例</h2>
+                <div class="w-24 h-1 bg-primary mx-auto mb-6"></div>
+                <p class="text-gray-600 max-w-3xl mx-auto">系统已在多个高铁和城际铁路项目中成功应用，显著提升了站台区域的安全监测水平。</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="bg-white rounded-lg shadow-lg overflow-hidden" data-aos="fade-up" data-aos-delay="100">
+                    <img src="images/cases/case-1.jpg" alt="广佛南环" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2 text-dark">广佛南环</h3>
+                        <p class="text-gray-600">系统在广佛南环城际铁路项目中成功应用，实现了站台门与列车间复杂空间的无盲区异常检测。</p>
+                    </div>
+                </div>
+                
+                <div class="bg-white rounded-lg shadow-lg overflow-hidden" data-aos="fade-up" data-aos-delay="200">
+                    <img src="images/cases/case-2.jpg" alt="广佛东环" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2 text-dark">广佛东环</h3>
+                        <p class="text-gray-600">系统在广佛东环城际铁路项目中成功应用，为乘客安全乘降和列车运行安全提供了有力保障。</p>
+                    </div>
+                </div>
+                
+                <div class="bg-white rounded-lg shadow-lg overflow-hidden" data-aos="fade-up" data-aos-delay="300">
+                    <img src="images/cases/case-3.jpg" alt="琶州支线" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2 text-dark">琶州支线</h3>
+                        <p class="text-gray-600">系统在琶州支线城际铁路项目中成功应用，有效解决了站台门与列车间复杂空间的安全监测问题。</p>
+                    </div>
+                </div>
+                
+                <div class="bg-white rounded-lg shadow-lg overflow-hidden" data-aos="fade-up" data-aos-delay="400">
+                    <img src="images/cases/case-4.jpg" alt="广清南延" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2 text-dark">广清南延</h3>
+                        <p class="text-gray-600">系统在广清南延城际铁路项目中成功应用，提升了站台区域的安全监测水平。</p>
+                    </div>
+                </div>
+                
+                <div class="bg-white rounded-lg shadow-lg overflow-hidden" data-aos="fade-up" data-aos-delay="500">
+                    <img src="images/cases/case-5.jpg" alt="吴圩机场高铁站" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2 text-dark">吴圩机场高铁站</h3>
+                        <p class="text-gray-600">系统在吴圩机场高铁站项目中成功应用，为机场快线的安全运行提供了可靠保障。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="bg-dark text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- 公司信息 -->
+                <div>
+                    <div class="flex items-center space-x-2 mb-6">
+                        <img src="images/logo/logo-white.png" alt="顺如电子" class="h-10">
+                        <span class="text-lg font-bold">广州顺如电子科技</span>
+                    </div>
+                    <p class="text-gray-400 mb-6">专注于电子科技领域的创新企业，致力于为客户提供高品质的产品和服务。</p>
+                </div>
+                
+                <!-- 快速链接 -->
+                <div>
+                    <h4 class="text-lg font-bold mb-6">快速链接</h4>
+                    <ul class="space-y-3">
+                        <li><a href="index.html" class="text-gray-400 hover:text-white transition-all-300">首页</a></li>
+                        <li><a href="index.html#about" class="text-gray-400 hover:text-white transition-all-300">关于我们</a></li>
+                        <li><a href="index.html#services" class="text-gray-400 hover:text-white transition-all-300">主营业务</a></li>
+                        <li><a href="index.html#contact" class="text-gray-400 hover:text-white transition-all-300">联系我们</a></li>
+                    </ul>
+                </div>
+                
+                <!-- 主营业务 -->
+                <div>
+                    <h4 class="text-lg font-bold mb-6">主营业务</h4>
+                    <ul class="space-y-3">
+                        <li><a href="safety-system.html" class="text-gray-400 hover:text-white transition-all-300">安全乘降全时安全信息感知系统</a></li>
+                        <li><a href="void-detection.html" class="text-gray-400 hover:text-white transition-all-300">站台门与列车间无盲区异常检测</a></li>
+                        <li><a href="passenger-flow.html" class="text-gray-400 hover:text-white transition-all-300">基于客流大数据的运输效率提升</a></li>
+                    </ul>
+                </div>
+                
+                <!-- 联系方式 -->
+                <div>
+                    <h4 class="text-lg font-bold mb-6">联系方式</h4>
+                    <ul class="space-y-3">
+                        <li class="flex items-start">
+                            <i class="fa fa-map-marker text-gray-400 mt-1 mr-3"></i>
+                            <span class="text-gray-400">广州市天河区广汕二路602号5栋408房</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fa fa-phone text-gray-400 mt-1 mr-3"></i>
+                            <span class="text-gray-400">13512758806</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fa fa-envelope text-gray-400 mt-1 mr-3"></i>
+                            <span class="text-gray-400">13512758806@126.com</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fa fa-globe text-gray-400 mt-1 mr-3"></i>
+                            <span class="text-gray-400">www.gzsrdz.cn</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-12 pt-8 text-center">
+                <p class="text-gray-400">&copy; 2023 广州顺如电子科技有限公司. 保留所有权利.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 返回顶部和返回上一页按钮 -->
+    <div class="fixed bottom-8 right-8 flex flex-col space-y-4">
+        <button id="back-to-top" class="bg-primary text-white w-12 h-12 rounded-full flex items-center justify-center shadow-lg opacity-0 invisible transition-all-300">
+            <i class="fa fa-arrow-up"></i>
+        </button>
+        <button onclick="window.history.back()" class="bg-gray-700 text-white w-12 h-12 rounded-full flex items-center justify-center shadow-lg transition-all-300">
+            <i class="fa fa-arrow-left"></i>
+        </button>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        // 初始化AOS动画库
+        document.addEventListener('DOMContentLoaded', function() {
+            AOS.init({
+                duration: 800,
+                easing: 'ease-in-out',
+                once: true
+            });
+            
+            // 移动端菜单切换
+            const menuToggle = document.getElementById('menu-toggle');
+            const mobileMenu = document.getElementById('mobile-menu');
+            
+            menuToggle.addEventListener('click', function() {
+                mobileMenu.classList.toggle('hidden');
+            });
+            
+            // 平滑滚动
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // 关闭移动端菜单
+                    if (!mobileMenu.classList.contains('hidden')) {
+                        mobileMenu.classList.add('hidden');
+                    }
+                    
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+            
+            // 返回顶部按钮
+            const backToTopButton = document.getElementById('back-to-top');
+            
+            window.addEventListener('scroll', function() {
+                if (window.pageYOffset > 300) {
+                    backToTopButton.classList.remove('opacity-0', 'invisible');
+                    backToTopButton.classList.add('opacity-100', 'visible');
+                } else {
+                    backToTopButton.classList.remove('opacity-100', 'visible');
+                    backToTopButton.classList.add('opacity-0', 'invisible');
+                }
+            });
+            
+            backToTopButton.addEventListener('click', function() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
